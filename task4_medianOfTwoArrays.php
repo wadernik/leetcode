@@ -11,18 +11,43 @@ class Solution
     {
         $i = 0;
         $j = 0;
-        $iterator = 0;
         $middleLeft = -1;
-        $middle = 1;
+        $middle = -1;
 
         $nums1Size = count($nums1);
         $nums2Size = count($nums2);
 
-        for ($iterator = 0; $iterator <= ($nums1Size + $nums2Size) / 2; $iterator++) {
-
+        if (($nums1Size + $nums2Size) === 0) {
+            return 0.0;
         }
 
-        return 0.0;
+        for ($iterator = 0; $iterator <= ($nums1Size + $nums2Size) / 2; $iterator++) {
+            $middleLeft = $middle;
+
+            if ($i !== $nums1Size && $j !== $nums2Size) {
+                if ($nums1[$i] > $nums2[$j]) {
+                    $middle = $nums2[$j];
+                    $j++;
+                } else {
+                    $middle = $nums1[$i];
+                    $i++;
+                }
+            } elseif ($i < $nums1Size) {
+                $middle = $nums1[$i];
+                $i++;
+            } else {
+                $middle = $nums2[$j];
+                $j++;
+            }
+        }
+
+        if (($nums1Size + $nums2Size) % 2 === 1) {
+            echo "$middle\n";
+            return $middle;
+        }
+
+        echo ($middle + $middleLeft) / 2 . "\n";
+        return ($middle + $middleLeft) / 2;
     }
 
     public static function testFunction(array $nums1, array $nums2): float
@@ -57,10 +82,10 @@ class Solution
     }
 }
 
-// $nums1 = [];
-// $nums2 = [];
-$nums1 = [1, 3];
-$nums2 = [2];
+$nums1 = [];
+$nums2 = [];
+// $nums1 = [1, 3];
+// $nums2 = [2];
 
-// Solution::findMedianSortedArrays($nums1, $nums2);
-Solution::testFunction($nums1, $nums2);
+Solution::findMedianSortedArrays($nums1, $nums2);
+// Solution::testFunction($nums1, $nums2);
